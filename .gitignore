@@ -3,7 +3,6 @@
 .env
 credentials.json
 token.json
-data/
 
 # GitHub's Python gitignore from https://github.com/github/gitignore/blob/master/Python.gitignore
 
