@@ -3,6 +3,7 @@
 .env
 credentials.json
 token.json
+*.pickle
 
 # GitHub's Python gitignore from https://github.com/github/gitignore/blob/master/Python.gitignore
 
