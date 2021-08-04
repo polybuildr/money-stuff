@@ -80,8 +80,8 @@ def save_plot_heatmap(heatmap: Dict, filename):
         robust=True,
         yticklabels=1,
         xticklabels=[date.strftime("%b '%y") for date in list(df)],
-        # TODO: They aren't really percentages though...
-        cbar_kws={'format': '%d%%'}
+        # Hide the colorbar values, they don't really mean anything.
+        cbar_kws={'format': ''},
     )
     plt.gcf().set_size_inches(12, 6.75)
     plt.tight_layout()
