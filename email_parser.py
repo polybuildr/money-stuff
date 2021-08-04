@@ -90,4 +90,5 @@ def _is_section_heading_table(tag: Tag) -> bool:
 
 # Apply any "universal" text corrections/cleanups.
 def _clean_text(s: str) -> str:
-    return re.sub(" +", " ", s.replace("\xa0", " "))
+    s = s.replace("\xa0", " ").replace("“", '"').replace("”", '"').replace("’", "'")
+    return re.sub(" +", " ", s)
