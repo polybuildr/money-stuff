@@ -1,5 +1,5 @@
 from collections import Counter, defaultdict
-from html import entities
+import re
 
 import spacy
 
@@ -69,6 +69,13 @@ class EntityExtractor:
 
     @staticmethod
     def clean_entity_counter(counter):
+        # Remove whitespace from outside of all keys.
+        for key in list(counter.keys()):
+            if key.strip() != key:
+                root = key.strip()
+                counter[root] += counter[key]
+                del counter[key]
+
         # Replace possessive "'s" with root.
         for key in list(counter.keys()):
             if key[-2:] == "’s" or key[-2:] == "'s":
@@ -76,7 +83,14 @@ class EntityExtractor:
                 counter[root] += counter[key]
                 del counter[key]
 
-        # Remove prefix "the"
+        # Remove all unexpected special characters.
+        for key in list(counter.keys()):
+            root = re.sub('[^a-zA-Z0-9. -]+', '', key)
+            if key != root:
+                counter[root] += counter[key]
+                del counter[key]
+
+        # Remove prefix "the" if there are spaces.
         for key in list(counter.keys()):
             if " " in key and key[:4].lower() == "the ":
                 root = key[4:]
