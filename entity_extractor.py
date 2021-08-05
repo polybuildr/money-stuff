@@ -1,8 +1,6 @@
 from collections import Counter, defaultdict
 import re
 
-import spacy
-
 from article import Article
 
 RELEVANT_ENT_LABELS = [
@@ -51,12 +49,13 @@ class EntityExtractor:
     def __init__(self):
         print("Loading NLP model...")
         try:
-            self.nlp = spacy.load("en_core_web_sm")
-        except OSError:
-            print(
+            import en_core_web_sm as spacy_en_model
+        except ImportError:
+            raise Exception(
                 "Failed to load spacy model, try installing with `python -m spacy download "
                 "en_core_web_sm`."
             )
+        self.nlp = spacy_en_model.load()
 
     def extract_entities(self, article: Article, clean: bool) -> Counter:
         doc = self.nlp(str(article))
