@@ -34,7 +34,15 @@ def make_creds():
                 )
                 raise e
         else:
-            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+            try:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    "credentials.json", SCOPES
+                )
+            except FileNotFoundError as e:
+                raise FileNotFoundError(
+                    "Download your Gmail API client secret and save it as credentials.json. "
+                    "See https://developers.google.com/gmail/api/quickstart/python."
+                )
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open("token.json", "w") as token:
@@ -84,7 +92,7 @@ def main():
             html_body = base64.urlsafe_b64decode(
                 msg["payload"]["parts"][1]["body"]["data"]
             )
-            clean_subject = re.sub("[^a-zA-Z0-9]+", "-", subject.replace('’', ''))
+            clean_subject = re.sub("[^a-zA-Z0-9]+", "-", subject.replace("’", ""))
             file_name = (
                 f"{DOWNLOAD_DIRECTORY_RELATIVE}{received_date.strftime('%Y-%m-%d')}-"
                 f"{clean_subject}.html"
