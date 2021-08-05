@@ -2,7 +2,7 @@ import pickle
 import pprint
 import time
 from collections import Counter, defaultdict
-from datetime import date
+import datetime
 from glob import glob
 from typing import Dict, List
 
@@ -30,7 +30,7 @@ def main():
 
     counters: List[Counter] = data["entity_counters"]
     articles: List[Article] = data["articles"]
-    articles = [article for article in articles if article.date < date(2021, 8, 1)]
+    articles = [article for article in articles if article.date < datetime.date(2021, 8, 1)]
 
     for counter in counters:
         EntityExtractor.clean_entity_counter(counter)
