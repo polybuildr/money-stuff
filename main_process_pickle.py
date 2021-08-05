@@ -14,10 +14,10 @@ from article import Article
 from entity_extractor import EntityExtractor
 
 SKIP_ENTITIES = [
-    "U.S.", # Obvious, so not particularly interesting .
-    "Bloomberg", # Mostly referencing other articles?
-    "Adam Neumann", # Mostly corresponds to WeWork.
-    "Twitter", # Not very interesting as a topic.
+    "U.S.",  # Obvious, so not particularly interesting .
+    "Bloomberg",  # Mostly referencing other articles?
+    "Adam Neumann",  # Mostly corresponds to WeWork.
+    "Twitter",  # Not very interesting as a topic.
 ]
 
 
@@ -55,12 +55,13 @@ def generate_heatmap(
     counters: List[Counter],
     total_counter: Counter,
     num_entities=23,
+    skip_entities=True,
 ) -> dict:
     heatmap = {}
     for key, _ in total_counter.most_common(50):
         if len(heatmap) >= num_entities:
             break
-        if key in SKIP_ENTITIES:
+        if skip_entities and key in SKIP_ENTITIES:
             continue
         counts_by_month = defaultdict(int)
         date_and_count = [
@@ -72,8 +73,12 @@ def generate_heatmap(
     return heatmap
 
 
-def save_plot_heatmap(heatmap: Dict, filename):
+def save_plot_heatmap(
+    heatmap: Dict, filename, ticklabelsize=15, linewidths=1, square=False
+):
     df = pd.DataFrame(heatmap).T
+    plt.rc("xtick", labelsize=ticklabelsize)
+    plt.rc("ytick", labelsize=ticklabelsize)
     sns.heatmap(
         df,
         cmap="Blues",
@@ -81,7 +86,9 @@ def save_plot_heatmap(heatmap: Dict, filename):
         yticklabels=1,
         xticklabels=[date.strftime("%b '%y") for date in list(df)],
         # Hide the colorbar values, they don't really mean anything.
-        cbar_kws={'format': ''},
+        cbar_kws={"format": ""},
+        linewidths=linewidths,
+        square=square,
     )
     plt.gcf().set_size_inches(12, 6.75)
     plt.tight_layout()
