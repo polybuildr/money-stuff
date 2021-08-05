@@ -47,7 +47,7 @@ ENT_REPLACEMENTS = {
 
 class EntityExtractor:
     def __init__(self):
-        print("Loading NLP model...")
+        print("Loading NLP model... ", end='', flush=True)
         try:
             import en_core_web_sm as spacy_en_model
         except ImportError:
@@ -56,6 +56,7 @@ class EntityExtractor:
                 "en_core_web_sm`."
             )
         self.nlp = spacy_en_model.load()
+        print("Done.")
 
     def extract_entities(self, article: Article, clean: bool) -> Counter:
         doc = self.nlp(str(article))
