@@ -74,7 +74,7 @@ def generate_heatmap(
 
 
 def save_plot_heatmap(
-    heatmap: Dict, filename, ticklabelsize=15, linewidths=1, square=False
+    heatmap: Dict, filename, ticklabelsize=15, linewidths=0.1, square=True
 ):
     df = pd.DataFrame(heatmap).T
     plt.rc("xtick", labelsize=ticklabelsize)
