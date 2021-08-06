@@ -20,6 +20,8 @@ SKIP_ENTITIES = [
     "Twitter",  # Not very interesting as a topic.
 ]
 
+counters: List[Counter]
+articles: List[Article]
 
 def main(normalize_count=True):
     run_timestamp = int(time.time())
@@ -28,8 +30,10 @@ def main(normalize_count=True):
     with open(latest_pickle, "rb") as f:
         data = pickle.load(f)
 
-    counters: List[Counter] = data["entity_counters"]
-    articles: List[Article] = data["articles"]
+    # Globals for easy access when running with `python -i`
+    global counters, articles
+    counters = data["entity_counters"]
+    articles = data["articles"]
     articles = [article for article in articles if article.date < datetime.date(2021, 8, 1)]
 
     for counter in counters:
