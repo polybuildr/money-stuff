@@ -21,7 +21,7 @@ SKIP_ENTITIES = [
 ]
 
 
-def main():
+def main(normalize_count=True):
     run_timestamp = int(time.time())
     latest_pickle = sorted(glob("articles-and-entities-*.pickle"))[-1]
     print(f"Using {latest_pickle} ...")
@@ -35,12 +35,13 @@ def main():
     for counter in counters:
         EntityExtractor.clean_entity_counter(counter)
 
-    for counter in counters:
-        total = sum(counter.values())
-        for key in counter:
-            # normalize as percent of total entity count
-            val = counter[key]
-            counter[key] = int(val * 100 / total)
+    if normalize_count:
+        # Normalize as percent of total entity count
+        for counter in counters:
+            total = sum(counter.values())
+            for key in counter:
+                val = counter[key]
+                counter[key] = int(val * 100 / total)
 
     global total_counter
     total_counter = sum(counters, Counter())
