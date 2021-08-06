@@ -4,6 +4,8 @@ There exists a fantastic newsletter called Money Stuff which can be found at htt
 
 Recently, I was idly wondering about the topics that Matt Levine writes about in Money Stuff and how they reflect trends in Finance news, in some way. I had some free time on my hands, hence this exploratory respository.
 
+![Heatmap of the top 10 topics by count per month](heatmap.png)
+
 The code in this repository downloads Money Stuff emails from your Gmail account using the [Gmail API](https://developers.google.com/gmail/api/quickstart/python), runs the [Spacy NLP library](https://spacy.io/) on it and then plots a heatmap using [Seaborn](https://seaborn.pydata.org/)/[Matplotlib](https://matplotlib.org/).
 
 There will (eventually) be a longer blog post about this project on my blog at https://blog.vghaisas.com.
