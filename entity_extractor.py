@@ -85,7 +85,7 @@ class EntityExtractor:
 
         # Remove all unexpected special characters.
         for key in list(counter.keys()):
-            root = re.sub('[^a-zA-Z0-9. -]+', '', key)
+            root = re.sub('[^a-zA-Z0-9.& -]+', '', key)
             if key != root:
                 counter[root] += counter[key]
                 del counter[key]
